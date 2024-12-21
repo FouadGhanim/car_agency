@@ -1,0 +1,111 @@
+﻿@model ProfileViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/user_profile.css" />
+    <style>
+        .btn {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="profile-header d-flex align-items-center">
+            <img src="@Model.UserImage"
+                 alt="Profile Picture"
+                 class="profile-picture me-4" />
+            <div>
+                <h4>@Model.UserName</h4>
+                <p class="mb-0">@Model.Email | @Model.PhoneNumber</p>
+            </div>
+            <div class="btn-container">
+                <a asp-action="EditUser" asp-controller="User" class="btn-btn-custom-ms-auto-btn-header">Edit</a>
+                
+                <a asp-action="Logout" asp-controller="Account" role="button" class="btn-btn-logout-ms-auto-btn-header">
+                    Logout
+                </a>
+                
+            </div>
+
+
+        </div>
+
+        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active"
+                        id="orders-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#orders"
+                        type="button"
+                        role="tab">
+                    Order Status
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link"
+                        id="listings-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#listings"
+                        type="button"
+                        role="tab">
+                    My Listings
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="profileTabsContent">
+            <div class="tab-pane fade show active" id="orders" role="tabpanel">
+                @foreach (var car in ViewBag.UserCars){
+                <div class="order-card">
+                    <img src="@car.carImage"
+                         alt="Order Image" />
+                    <div>
+                        <h5>@car.CarId</h5>
+                            <p class="mb-1">Car: @car.CarName</p>
+                            <p class="mb-1">Price: @car.Price</p>
+                            @if (car.Status)
+                            {
+                            <p class="order-status text-success">Status: Delivered</p>
+                        }
+                        else
+                        {
+                            <p class="order-status text-warning">Status: Pending</p>
+                        }
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="tab-pane fade" id="listings" role="tabpanel">
+                @foreach (var car in ViewBag.UserCars){
+                <div class="listing-card">
+                        <img src="@car.carImage"
+                         alt="Car Thumbnail" />
+                    <div class="listing-details">
+                        <h5 class="mb-1">@car.CarName</h5>
+                        <p class="mb-0 text-muted">@car.Price | @car.mile</p>
+                    </div>
+                    <button class="btn-btn-custom-me-2">Edit</button>
+                        <a asp-action="Delet" asp-controller="User" asp-route-id="@car.CarId" role="button" class="btn-btn-danger-me-2" >Delete</a>
+                        @if (car.Status==false){
+                            <a asp-action="Sold" asp-controller="User" asp-route-id="@car.CarId" role="button" class="btn-btn-success" style="text-decoration:none">Mark as Sold</a>
+                        }
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

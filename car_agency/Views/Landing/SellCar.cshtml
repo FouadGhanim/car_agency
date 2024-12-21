@@ -1,0 +1,293 @@
+﻿ @model CarViewModel
+@{
+    SelectList BrandItems = new SelectList(ViewBag.BrandName, "BrandId", "BrandName");
+    SelectList ModelItems = new SelectList(ViewBag.ModelName, "ModelId", "ModelName");
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="~/image/x-icon" href="~/images/logo.webp" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/generalstyle.css" />
+    <title>Add Car</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="./landing.html ">
+                <img src="~/images/logo not bg.png" alt="Logo" />
+                <h5>AutoVibe</h5>
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" asp-action="Profile" asp-controller="User"><i class="fa-solid fa-user fa-xs"></i>@ViewBag.Name</a>
+                        </li>
+                    }
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" asp-action="Login" asp-controller="Account"><i class="fa-solid fa-user fa-xs"></i> Login</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-action="Welcome" asp-controller="Landing"><i class="fa-solid fa-house fa-xs"></i> Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Feedback" asp-controller="Landing"><i class="fa-regular fa-handshake fa-xs"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Products" asp-controller="Landing"><i class="fa-solid fa-table fa-xs"></i> Products</a>
+                    </li>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="SellCar" asp-controller="Landing">  <div class="btn">+ Sell Your Car</div>  </a>
+                        <li class="nav-item model-ai">
+                            <a class="nav-link" asp-action="Prediction" asp-controller="Landing">  <div class="btn"> <i class="fa-solid fa-calculator"></i> Estimate your car's price</div>  </a>
+                        </li>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Brands</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="sidebar">
+                <h4>Brands</h4>
+
+                <ul>
+                    <li class="d-flex align-items-center">  <img src="./images/kia-brand.jpg" alt="brands"> Kia </li>
+                    <li class="d-flex align-items-center">  <img src="./images/toyota-brand.jpg" alt="brands"> Toyota </li>
+                    <li class="d-flex align-items-center">  <img src="./images/hyundai-brand-removebg-preview.png" alt="brands"> Hyundai </li>
+                    <li class="d-flex align-items-center">  <img src="./images/mg-brand.jpg" alt="brands"> MG </li>
+                    <li class="d-flex align-items-center">  <img src="./images/ford-brand.jpg" alt="brands"> Ford </li>
+                    <li class="d-flex align-items-center">  <img src="./images/nissan-brand.jpg" alt="brands"> Nissan </li>
+                </ul>
+
+                <h4>Kind</h4>
+
+                <ul>
+                    <li class="d-flex align-items-center"> New </li>
+                    <li class="d-flex align-items-center"> Using </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <section class="add-car">
+
+        <div class="tab-content" id="pills-tabContent">
+
+            <div class="container">
+                <div class="text">
+                    Sell Your Car Easily
+                </div>
+                
+                    <form asp-action="SellCar" asp-controller="Landing" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="fileField" class="attachment">
+                                    <div class="row btn-file">
+                                        <div class="btn-file__preview"></div>
+                                        <div class="btn-file__actions">
+                                            <div class="btn-file__actions__item col-xs-12 text-center">
+                                                <div class="btn-file__actions__item--shadow">
+                                                    <i class="fa fa-plus fa-lg fa-fw" aria-hidden="true"></i>
+                                                    <div class="visible-xs-block"></div>
+                                                    Select file
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input asp-for="ImageFile" type="file" id="fileField">
+                                </label>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-data">
+                                <select asp-for="BrandId" asp-items="BrandItems" class="w-100" id="BrandId" onchange="GetModels()">
+                                        <option value="0">--Select Brand--</option>
+                                    </select>
+                                </div>
+                                <div class="input-data">
+                                <select id="Models" asp-for="ModelId" class="w-100">
+
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-data">
+                                    <select asp-for="Transmission" id="" class="w-100">
+                                        <option value="barands"> choose Transmission </option>
+                                    <option value="Manual"> Manual </option>
+                                    <option value="Semi-Auto"> Semi-Auto</option>
+                                    <option value="Automatic"> Automatic </option>
+                                    </select>
+                                </div>
+                                <div class="input-data">
+                                    <select asp-for="FuelType" id="" class="w-100">
+                                        <option value="barands"> choose FuelType </option>
+                                    <option value="Petrol"> Petrol </option>
+                                    <option value="Diesel"> Diesel</option>
+                                    <option value="Hybrid"> Hybrid </option>
+                                    <option value="Electric"> Electric </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-data">
+                                    <input asp-for="Mileage" required>
+                                    <div class="underline"></div>
+                                    <label for="">Mileage</label>
+                                </div>
+
+                                <div class="input-data">
+                                    <input asp-for="Engine" required>
+                                    <div class="underline"></div>
+                                    <label for="">Engine size</label>
+                                </div>
+                                <br />
+                            </div>
+                            <div class="form-row">
+                                <div class="input-data">
+                                    <input asp-for="Year" required>
+                                    <div class="underline"></div>
+                                    <label for="">Year</label>
+                                </div>
+
+
+                                <div class="input-data">
+                                    <input asp-for="PhoneNumber" required>
+                                    <div class="underline"></div>
+                                    <label for="">Contact Number</label>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="input-data textarea">
+                                    <input asp-for="Price" required>
+                                    <div class="underline"></div>
+                                    <label for="">Price</label>
+                                </div>
+                                <div class="input-data textarea">
+                                    <input asp-for="CarStatus" required>
+                                    <div class="underline"></div>
+                                    <label for="">Car Status</label>
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="input-data textarea">
+                                    <textarea asp-for="Descraption" rows="8" cols="80" required></textarea>
+                                    <br />
+                                    <div class="underline"></div>
+                                    <label for="">Write your Description</label>
+                                </div>
+                            </div>
+
+                            <br />
+                            <div class="form-row submit-btn">
+                                <div class="input-data">
+                                    <div class="inner"></div>
+                                    <input type="submit" value="Add Car" data-bs-toggle="modal"  data-bs-target="#staticBackdrop">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                
+                
+                
+            </div>
+        </div>
+
+    </section>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        function GetModels() {
+            var BrandID = document.getElementById("BrandId").value;
+            console.log(BrandID)
+            var modelElement = document.getElementById("Models");
+            modelElement.innerHTML = "";
+
+            $.ajax({
+                url: `/Landing/GetModelsPerBrand?BrandId=`+BrandID,
+                method: "GET",
+                success: function (result) {
+                    console.log(result)
+                    result.forEach(model => {
+                        modelElement.innerHTML += `<option value="${model.modelId}">${model.modelName}</option>`;
+                    });
+                },
+                error: function (xhr) {
+                    console.error("Error fetching models: ", xhr);
+                }
+            });
+        }
+    </script>
+
+    <script>
+
+
+
+        document.querySelector('.attachment input[type="file"]').addEventListener('change', (event) => {
+            const fileInput = event.target;
+            const attachment = fileInput.closest('.attachment');
+            const btnFile = attachment.querySelector('.btn-file');
+
+            const btnFileActions = btnFile.querySelector('.btn-file__actions__item');
+            if (btnFileActions) {
+                btnFileActions.style.padding = '135px';
+            }
+
+            const btnFilePreview = btnFile.querySelector('.btn-file__preview');
+            if (btnFilePreview && fileInput.files[0]) {
+                btnFilePreview.style.backgroundImage = `url(${window.URL.createObjectURL(fileInput.files[0])})`;
+            }
+        });
+
+    </script>
+    <script src="https://kit.fontawesome.com/9b4902719c.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>  *@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</body>
+</html>
+ 

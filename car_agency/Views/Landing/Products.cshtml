@@ -1,0 +1,252 @@
+﻿@model List<ProductViewModel>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="~/images/logo.webp" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/generalstyle.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Products</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="~/images/logo not bg.png" alt="Logo" />
+                <h5>AutoVibe</h5>
+            </a>
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" asp-action="Profile" asp-controller="User"><i class="fa-solid fa-user fa-xs"></i>@ViewBag.Name</a>
+                        </li>
+                    }
+                    @if (User.Identity.IsAuthenticated == false)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" asp-action="Login" asp-controller="Account"><i class="fa-solid fa-user fa-xs"></i> Login</a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" asp-action="Welcome" asp-controller="Landing"><i class="fa-solid fa-house fa-xs"></i> Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Feedback" asp-controller="Landing"><i class="fa-regular fa-handshake fa-xs"></i> Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-action="Products" asp-controller="Landing"><i class="fa-solid fa-table fa-xs"></i> Products</a>
+                    </li>
+                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-action="SellCar" asp-controller="Landing">  <div class="btn">+ Sell Your Car</div>  </a>
+                        <li class="nav-item model-ai">
+                            <a class="nav-link" asp-action="Prediction" asp-controller="Landing">  <div class="btn"> <i class="fa-solid fa-calculator"></i> Estimate your car's price</div>  </a>
+                        </li>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Brands</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="sidebar">
+                <h4>Brands</h4>
+
+                <ul>
+                    <li class="d-flex align-items-center">  <img src="~/images/kia-brand.jpg" alt="brands"> Kia </li>
+                    <li class="d-flex align-items-center">  <img src="~/images/toyota-brand.jpg" alt="brands"> Toyota </li>
+                    <li class="d-flex align-items-center">  <img src="~/images/hyundai-brand-removebg-preview.png" alt="brands"> Hyundai </li>
+                    <li class="d-flex align-items-center">  <img src="~/images/mg-brand.jpg" alt="brands"> MG </li>
+                    <li class="d-flex align-items-center">  <img src="~/images/ford-brand.jpg" alt="brands"> Ford </li>
+                    <li class="d-flex align-items-center">  <img src="~/images/nissan-brand.jpg" alt="brands"> Nissan </li>
+                </ul>
+
+                <h4>Status</h4>
+
+                <ul>
+                    <li class="d-flex align-items-center"> New   </li>
+                    <li class="d-flex align-items-center"> Used </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <main class="row container">
+        <div class="sidebar col-xl-2 col-md-3 col-sm-10">
+            <h4>Brands</h4>
+
+            <ul>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="2"><img src="~/images/volks.png" alt="brands">Volks </a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="6"><img src="~/images/toyota-brand.jpg" alt="brands"> Toyota</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="1"><img src="~/images/hyundai-brand-removebg-preview.png" alt="brands"> Hyundai</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="3"><img src="~/images/BMW.jpg" alt="brands"> BMW </a></li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="5"><img src="~/images/ford-brand.jpg" alt="brands"> Ford</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="9"><img src="~/images/audi.png" alt="brands"> Audi</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="8"><img src="~/images/Vauxhall.png" alt="brands"> Vauxhall</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="4"><img src="~/images/skoda.jpg" alt="brands"> Skoda</a> </li>
+                <li class="d-flex align-items-center">  <a asp-action="ProductsByBrand" asp-controller="Landing" asp-route-Id="7"><img src="~/images/mers.jpg" alt="brands"> Mercedes</a> </li>
+
+            </ul>
+
+            <h4>Kind</h4>
+
+            <ul>
+                <li class="d-flex align-items-center"> <a asp-action="NewProducts" asp-controller="Landing"> New </a></li>
+                <li class="d-flex align-items-center">  <a asp-action="UsedProducts" asp-controller="Landing">used</a> </li>
+            </ul>
+
+        </div>
+        <div class="products col-xl-10 col-md-8 col-sm-10 tab-content" id="pills-tabContent">
+            <button class="btn show-sidebar-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                <i class="fa-solid fa-bars fa-2x"></i>
+            </button>
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="sort d-flex justify-content-between align-items-center mt-3 mb-3">
+                    <select name="sort" id="">
+                        <option value="name">Sorting By Name</option>
+                        <option value="price">Price</option>
+                    </select>
+                    <div class="search">
+                        <input type="text" placeholder="Search Cars">
+                        <div class="btn">Search</div>
+                    </div>
+                </div>
+                <section class="cards">
+                    @foreach (var car in Model)
+                    {
+                        <div class="card">
+
+                            <a href="#">
+                                <div class="show-data">
+                                    @car.CarStatues
+                                </div>
+                            </a>
+                            <img src="@car.Image" class="card-img-top" alt="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@car.FullName  </h5>
+                                <p class="card-text"> @car.price <s>$260.000</s> </p>
+                                <div class="stars">
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                    <i class="fa-solid fa-star fa-xs"></i>
+                                </div>
+                                <div class="card-footer d-flex">
+                                    <a href="#"><div class="btn">  <i class="fa-solid fa-shuffle"></i></div> </a>
+                                    <a asp-action="Details" asp-controller="Landing" asp-route-Id="@car.Id"> <div class="btn">View Quick</div> </a>
+                                    <a href="#"><div class="btn"> <i class="fa-regular fa-heart me-2"></i></div> </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <section class="sign">
+        <div class="container">
+            <div class="content">
+                <div class="icon"><i class="fa-solid fa-paper-plane fa-2x"></i></div>
+                <div class="data">
+                    <p>Sign up to Newsletter</p>
+                    <p>Recevie $50 Coupon for Shopping.</p>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <a href="#"> <span class="input-group-text" id="basic-addon2"> Sign In </span> </a>
+            </div>
+        </div>
+    </section>
+    <footer class="row justify-content-between">
+        <div class="box col-xl-3 col-md-10">
+            <h5>About Us</h5>
+            <p>Nullam tristique tortor nibh, in viverra libero sollicitudin ac. Suspendisse quis lacinia ipsum. Etiam scelerisque sit amet lectus quis lacinia. Sed.</p>
+            <p><i class="fa-solid fa-location-dot"></i> Egypt ,Cairo</p>
+            <p><i class="fa-solid fa-phone"></i> +2010 6066 1936</p>
+            <p><i class="fa-solid fa-envelope"></i> rawanselima2@gmail.com</p>
+        </div>
+        <div class="box col-xl-2 col-md-5 col-sm-10">
+            <h5>My account</h5>
+            <ul>
+                <li> Sign In</li>
+                <li>View Cart</li>
+                <li>My Wishlist</li>
+                <li>Terms & Conditions</li>
+                <li>Contact us</li>
+                <li>Track My Order</li>
+                <li>Help</li>
+            </ul>
+        </div>
+        <div class="box col-xl-2 col-md-5 col-sm-10">
+            <h5>Information</h5>
+            <ul>
+                <li> Sign In</li>
+                <li>View Cart</li>
+                <li>My Wishlist</li>
+                <li>Terms & Conditions</li>
+                <li>Contact us</li>
+                <li>Track My Order</li>
+                <li>Help</li>
+            </ul>
+        </div>
+        <div class="box col-xl-2 col-md-5 col-sm-10">
+            <h5>Follow Us</h5>
+            <ul>
+                <li> Sign In</li>
+                <li>View Cart</li>
+                <li>My Wishlist</li>
+                <li>Terms & Conditions</li>
+                <li>Contact us</li>
+                <li>Track My Order</li>
+                <li>Help</li>
+            </ul>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/9b4902719c.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script> *@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

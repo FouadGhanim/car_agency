@@ -1,0 +1,78 @@
+﻿@model AdminViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/Admin.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet" />
+
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="admin-card">
+            <img src="@Model.Image" alt="Admin" />
+            <h2>@Model.FullName</h2>
+            <h3>@Model.Email</h3>
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <ul>
+            <li><a <a asp-action="AdminProfile" asp-controller="Admin"><i class="fa-solid fa-users"></i> Customers</a></li>
+            <li><a <a asp-action="CarReport" asp-controller="Admin"><i class="fa-regular fa-rectangle-list"></i> Reports</a></li>
+            <li><a asp-action="ShowFeedback" asp-controller="Admin"><i class="fas fa-envelope"></i> Messages</a></li>
+
+            <li><a asp-action="Confirm" asp-controller="Admin"><i class="fa-regular fa-rectangle-list"></i> Confirmation</a></li>
+            <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li><a asp-action="Logout"asp-controller="Account"><i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Photo</th>
+                    <th>Name</th>
+                    <th>Email</th>
+      
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in ViewBag.User)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td><img src="@user.UserImage" alt="Customer Image" /></td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+
+                        <td>@user.PhoneNumber</td>
+                        <td style="margin-top:22px;">
+                            <a asp-action="UserCarRepo" asp-controller="Admin" asp-route-Id="@user.Id"> <button class="report">Report</button></a>
+                            <a asp-action="Delete" asp-controller="Admin" asp-route-Id="@user.Id"><button class="basket">Delete</button></a>
+                        </td>
+                    </tr>
+                }
+               
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://kit.fontawesome.com/9b4902719c.js"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/9b4902719c.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
+

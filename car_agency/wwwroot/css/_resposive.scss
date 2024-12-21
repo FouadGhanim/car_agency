@@ -1,0 +1,81 @@
+$xllarge: 1200px;
+$large: 992px;
+$medium: 768px;
+$small: 576px;
+
+@media (max-width: $xllarge) {
+  .carousel-inner {
+    height: auto;
+  }
+  .offer .swiper .swiper-slide .box .data {
+    padding: 30px;
+  }
+  .offer .offer-container.row .box {
+    margin: 10px auto;
+  }
+  main.row .products .tab-pane .cards .card {
+    width: calc(100% / 2.1);
+  }
+}
+
+@media (max-width: $large) {
+  .featured-products .products .card {
+    width: calc(100% / 2.1);
+    margin-inline: auto;
+  }
+
+  .top-sell .products .box {
+    width: 90%;
+    margin-inline: auto;
+  }
+
+  main.row .products .tab-pane .cards .card {
+    width: 90%;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: $medium) {
+  .carousel-inner {
+    height: 300px;
+    .content {
+      margin-top: 60px;
+      margin-inline: 10px;
+      width: 80% !important;
+      h1 {
+        font-size: 22px !important;
+        margin-top: 20px;
+      }
+      p {
+        font-size: 14px !important;
+      }
+      .btn {
+        margin-bottom: 40px;
+      }
+    }
+  }
+  .sign .container .input-group {
+    width: 90%;
+    margin: 20px 0;
+  }
+}
+
+@media (max-width: $small) {
+  .featured-products .products .card {
+    width: 90%;
+  }
+
+  main.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: fit-content !important;
+    .sidebar {
+      display: none;
+    }
+    .products .show-sidebar-btn {
+      display: block;
+      margin-top: 15px;
+    }
+  }
+}
+

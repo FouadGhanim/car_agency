@@ -1,0 +1,122 @@
+﻿@model RegisteViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up & Sign In</title>
+    <link rel="stylesheet" href="/css/loginAndregister.css" />
+    <link href="https://unpkg.com/boxicons/css/boxicons.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="container" class="container">
+        <div class="row">
+            <div class="col align-items-center flex-col sign-up">
+                <div class="form-wrapper align-items-center">
+                    <form class="form sign-up" asp-action="SaveRegister" asp-controller="Account" enctype="multipart/form-data">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="input-group">
+                            <i class="bx bxs-user"></i>
+                            <input asp-for="FName" placeholder="First Name" required />
+                            <span asp-validation-for="FName" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bxs-user"></i>
+                            <input asp-for="LName" placeholder="Last Name" required />
+                            <span asp-validation-for="LName" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bx-phone"></i>
+                            <input asp-for="PhoneNumber" placeholder="Phone" required />
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bx-mail-send"></i>
+                            <input asp-for="Email" placeholder="Email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bxs-lock-alt"></i>
+                            <input asp-for="Password" placeholder="Password" type="password" required />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bxs-lock-alt"></i>
+                            <input asp-for="ConfirmPassword" placeholder="Confirm Password" type="password" required />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="input-group">
+                            <label for="ImageFile" class="bx bx-image">Choose a Personal Photo</label>
+                            <input asp-for="ImageFile" type="file" accept="image/*" />
+                            <span asp-validation-for="ImageFile" class="text-danger"></span>
+                        </div>
+                        <button type="submit" id="signup-btn">Sign up</button>
+                        <p>
+                            <span>Already have an account?</span>
+                            <b onclick="toggle()" class="pointer">Sign in here</b>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col align-items-center flex-col sign-in">
+                <div class="form-wrapper align-items-center">
+                    <form class="form sign-in" >
+                        <div  class="text-danger"></div>
+                        <div class="input-group">
+                            <i class="bx bx-phone"></i>
+                            <input type="tel" placeholder="Phone" required />
+                            
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bx-mail-send"></i>
+                            <input type="Email" placeholder="Email" required />
+                           
+                        </div>
+                        <div class="input-group">
+                            <i class="bx bxs-lock-alt"></i>
+                            <input  placeholder="Password" type="password" required />
+                          
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                        <p><b>Forgot password?</b></p>
+                        <p>
+                            <span>Don't have an account?</span>
+                            <b onclick="toggle()" class="pointer">Sign up here</b>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row content-row">
+            <div class="col align-items-center flex-col">
+                <div class="text sign-in">
+                    <h2>Welcome</h2>
+                </div>
+                <div class="img sign-in"></div>
+            </div>
+            <div class="col align-items-center flex-col">
+                <div class="img sign-up"></div>
+                <div class="text sign-up">
+                    <h2>Join with us</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let container = document.getElementById("container");
+
+        toggle = () => {
+            container.classList.toggle("sign-in");
+            container.classList.toggle("sign-up");
+        };
+
+        setTimeout(() => {
+            container.classList.add("sign-in");
+        }, 200);
+    </script>
+</body>
+</html>

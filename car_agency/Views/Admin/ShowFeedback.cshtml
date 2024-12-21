@@ -1,0 +1,114 @@
+﻿@model List<car_agency.Models.Entities.Feedback>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/contct_admin.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+          rel="stylesheet" />
+    <title>Admin - Contact Us Submissions</title>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="admin-card">
+            <img src="@ViewBag.Admin.Image" alt="Admin" />
+            <h2 style="color: white;">@ViewBag.Admin.FullName</h2>
+            <h2 style ="color: white;">@ViewBag.Admin.Email</h2>
+            <div class="social-icons">
+                <a href="#" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+        <ul>
+            <li><a <a asp-action="AdminProfile" asp-controller="Admin"><i class="fa-solid fa-users"></i> Customers</a></li>
+            <li><a <a asp-action="CarReport" asp-controller="Admin"><i class="fa-regular fa-rectangle-list"></i> Reports</a></li>
+            <li><a asp-action="ShowFeedback" asp-controller="Admin"><i class="fas fa-envelope"></i> Messages</a></li>
+
+            <li><a asp-action="Confirm" asp-controller="Admin"><i class="fa-regular fa-rectangle-list"></i> Confirmation</a></li>
+            <li><a href="#"><i class="fa-solid fa-gear"></i> Settings</a></li>
+            <li><a asp-action="Logout" asp-controller="Account"><i class="fa-solid fa-person-walking-arrow-right"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <section class="admin-table-container" style="width:100%;">
+        <div class="search-box">
+            <input type="text"
+                   placeholder="Search by name or email"
+                   id="searchInput" />
+            <button id="searchButton">Search</button>
+        </div>
+
+        <table id="contactTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Message</th>
+                    <th>Subject</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            @foreach (var feedback in Model)
+            {
+                <tbody>
+                    <tr>
+                    <td>@feedback.Id</td>
+                    <td>@feedback.FullName</td>
+                    <td>@feedback.Email</td>
+                    <td>@feedback.feedBack</td>
+                    <td>@feedback.Subject</td>
+                        <td><a asp-action="DeleteFeedback" asp-controller="Admin" asp-route-Id="@feedback.Id"> <button class="action-btn">Delete</button></a> </td>
+                </tr>
+                
+            </tbody>
+            }
+        </table>
+    </section>
+
+    <script>
+        document
+            .getElementById("searchButton")
+            .addEventListener("click", function () {
+                const input = document
+                    .getElementById("searchInput")
+                    .value.toLowerCase();
+                const rows = document.querySelectorAll("#contactTable tbody tr");
+                let found = false;
+
+                rows.forEach(function (row) {
+                    const cells = row.getElementsByTagName("td");
+                    const name = cells[1].textContent.toLowerCase();
+                    const email = cells[2].textContent.toLowerCase();
+
+                    if (name.includes(input) || email.includes(input)) {
+                        row.style.display = "";
+                        found = true;
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+
+                const noDataMessage = document.getElementById("noDataMessage");
+                if (found) {
+                    noDataMessage.style.display = "none";
+                } else {
+                    noDataMessage.style.display = "block";
+                }
+            });
+    </script>
+    <script src="https://kit.fontawesome.com/9b4902719c.js"
+            crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/9b4902719c.js"
+            crossorigin="anonymous"></script>
+</body>
+</html>
+
